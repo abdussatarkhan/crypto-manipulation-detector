@@ -1,0 +1,40 @@
+# Data files
+data/raw/*
+!data/raw/README.md
+*.csv
+*.parquet
+*.pkl
+*.h5
+
+# Environments & Config
+.env
+.venv/
+venv/
+ENV/
+env/
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+
+# Distribution & Build
+build/
+dist/
+*.egg-info/

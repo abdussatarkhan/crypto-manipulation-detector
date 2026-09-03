@@ -1,0 +1,122 @@
+# ==============================================================================
+# Crypto Wash-Trade & Market Manipulation Detector Configuration
+# ==============================================================================
+
+app:
+  name: "Crypto Manipulation Detector"
+  version: "1.0.0"
+  environment: "production"
+  log_level: "INFO"
+  timezone: "UTC"
+
+# Data Ingestion Sources
+ingestion:
+  binance:
+    rest_url: "https://api.binance.com/api/v3"
+    ws_url: "wss://stream.binance.com:9443/ws"
+    ws_combined_url: "wss://stream.binance.com:9443/stream?streams="
+    symbols:
+      - "btcusdt"
+      - "ethusdt"
+      - "solusdt"
+      - "bnbusdt"
+    reconnect_interval_sec: 5
+    max_reconnect_attempts: 10
+    heartbeat_interval_sec: 30
+    request_timeout_sec: 10
+    historical_default_days: 14
+
+  coingecko:
+    api_url: "https://api.coingecko.com/api/v3"
+    rate_limit_rpm: 30
+
+  blockchain_info:
+    api_url: "https://blockchain.info"
+    max_hops: 3
+    tx_limit_per_address: 50
+
+# Kafka Message Broker Configuration
+kafka:
+  bootstrap_servers:
+    - "localhost:9092"
+  topics:
+    raw_trades: "crypto-raw-trades"
+    processed_trades: "crypto-processed-trades"
+    manipulation_alerts: "crypto-manipulation-alerts"
+  consumer_group: "wash-trade-detector-group"
+  auto_offset_reset: "latest"
+  max_poll_records: 1000
+  buffer_memory_bytes: 33554432  # 32MB
+  compression_type: "gzip"
+
+# Preprocessing & Normalization
+preprocessing:
+  outlier_price_filter_pct: 0.20  # filter trades deviating >20% from median in window
+  aggregation_interval_ms: 1000
+  deduplication_cache_size: 50000
+  export_format: "parquet"
+  batch_size: 5000
+
+# Anomaly Detection Algorithms
+anomaly_detection:
+  ewma:
+    alpha_volume: 0.15
+    alpha_spread: 0.20
+    alpha_cancel_ratio: 0.25
+    control_limit_sigma: 3.0
+  sliding_window:
+    window_size_seconds: 300       # 5-minute rolling window
+    min_periods: 30
+    z_score_threshold: 2.85
+  spoofing:
+    cancel_to_trade_ratio_threshold: 8.0
+    quote_stuffing_threshold_tps: 75.0
+    flash_spread_threshold_bps: 12.0
+
+# Graph & Network Wash-Trading Analysis
+graph_analysis:
+  max_cycle_length: 5             # Detect wash cycles up to A->B->C->D->E->A
+  min_cycle_volume_usd: 1000.0
+  time_decay_half_life_hours: 24.0
+  louvain:
+    resolution: 1.0
+    random_state: 42
+  centrality:
+    top_k_central_nodes: 20
+    min_betweenness_for_syndicate: 0.15
+  clustering_coefficient_threshold: 0.45
+
+# Benford's Law Statistical Validation
+benfords_law:
+  min_sample_size: 100
+  ks_alpha: 0.05                 # 5% significance level
+  chi_square_alpha: 0.05
+  suspicious_digit_ratio_multiplier: 2.2
+  digits: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# Alert Scoring & Composite Engine
+alert_scoring:
+  weights:
+    graph_cycle: 0.35
+    volume_ewma: 0.25
+    benford_anomaly: 0.20
+    order_cancel_spoofing: 0.20
+  thresholds:
+    low_risk: 0.35
+    medium_risk: 0.65
+    high_risk: 0.85
+  cooldown_seconds: 60           # Avoid spamming duplicate alerts
+
+# Dashboard & Monitoring
+dashboard:
+  host: "127.0.0.1"
+  port: 8050
+  debug: false
+  refresh_interval_ms: 2000
+  history_display_points: 120
+
+# Compliance & Reporting
+compliance_report:
+  agency_header: "FINANCIAL INTELLIGENCE UNIT & COMPLIANCE DIVISION"
+  retention_days: 180
+  output_dir: "reports/generated"

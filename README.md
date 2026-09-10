@@ -1,7 +1,7 @@
 # Crypto Manipulation & Wash-Trading Anomaly Detection Engine
 
 [![Python](https://img.shields.io/badge/Python-Forensics-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/) [![Anomaly Detection](https://img.shields.io/badge/ML-Isolation_Forest-FFA800?style=for-the-badge&logo=scikitlearn&logoColor=white)](https://scikit-learn.org/) [![Docker](https://img.shields.io/badge/Docker-Multi--Container-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
-[![Author](https://img.shields.io/badge/Author-Abdussatar-E50914?style=for-the-badge&logo=github&logoColor=white)](https://github.com/satarabdus692-bot)
+[![Author](https://img.shields.io/badge/Author-Abdussatar-E50914?style=for-the-badge&logo=github&logoColor=white)](https://github.com/abdussatarkhan)
 
 > **A quantitative forensics and anomaly detection pipeline identifying cryptocurrency wash-trading, spoofing, and cyclical volume manipulation using Benford's Law analysis, network graph centrality, and unsupervised machine learning.**
 
@@ -43,7 +43,7 @@ graph TD
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/satarabdus692-bot/crypto-manipulation-detector.git
+git clone https://github.com/abdussatarkhan/crypto-manipulation-detector.git
 cd crypto-manipulation-detector
 ```
 
@@ -61,8 +61,8 @@ pip install -r requirements.txt
 
 ## 👨‍💻 Author & Profile
 
-Built and maintained by **Abdussatar** ([@satarabdus692-bot](https://github.com/satarabdus692-bot)).  
-For technical discussions, collaboration, or queries, feel free to reach out via [LinkedIn](https://www.linkedin.com/in/abdus-satar-5150813b5/) or [GitHub](https://github.com/satarabdus692-bot).
+Built and maintained by **Abdussatar** ([@abdussatarkhan](https://github.com/abdussatarkhan)).  
+For technical discussions, collaboration, or queries, feel free to reach out via [LinkedIn](https://www.linkedin.com/in/abdus-satar-5150813b5/) or [GitHub](https://github.com/abdussatarkhan).
 
 ---
 

@@ -43,6 +43,20 @@ print(bars_df.head())
 # %% [markdown]
 # ## 2. Apply EWMA Control Charts & Sliding-Window Z-Scores
 # 
+# ### Mathematical Formulations:
+# 1. **Exponentially Weighted Moving Average (EWMA)**:
+#    $$\text{EWMA}_t = \lambda X_t + (1 - \lambda) \text{EWMA}_{t-1}$$
+#    where $\lambda \in (0, 1]$ is the smoothing factor (typically $\lambda = 0.2$ for high-frequency quote feeds).
+# 
+# 2. **Sliding-Window Volume Z-Score**:
+#    $$Z_t = \frac{V_t - \mu_{w}}{\sigma_{w}}$$
+#    where $\mu_w$ and $\sigma_w$ represent rolling 15-minute window mean and standard deviation.
+#    Volume anomalies exceeding $Z_t > 3.5$ trigger potential spoofing / wash-trade alerts.
+# 
+# 3. **Order-to-Cancel (OTC) Ratio**:
+#    $$\text{OTC}_w = \frac{N_{\text{cancelled}}}{N_{\text{placed}}}$$
+#    Alert condition: $\text{OTC}_w > 0.95$ combined with median order lifetime $< 450\text{ms}$.
+# 
 # The EWMA filter gives exponential weight to recent observations while tracking variance dynamically:
 # $$z_t = \lambda x_t + (1 - \lambda) z_{t-1}$$
 # Control limits are established at $\mu_t \pm 3 \sigma_t$.
